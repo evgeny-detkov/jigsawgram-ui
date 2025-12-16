@@ -93,3 +93,4 @@ gradle/
 UserSettings
 .idea/.idea.jigsawgram-ui/.idea/.gitignore
 .idea/.idea.jigsawgram-ui/.idea/encodings.xml
+/.idea
