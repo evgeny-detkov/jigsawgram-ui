@@ -1,0 +1,152 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ecf659e8a214e82a40b2b9d5ed4f600, type: 3}
+  m_Name: PuzzleImageDatabase
+  m_EditorClassIdentifier: 
+  categories:
+  - id: animals
+    name: Animals
+    puzzleResList:
+    - id: 1
+      viewSprite: {fileID: 21300000, guid: c63de415c4cdd0143b16d197682ab38b, type: 3}
+      accessType: 0
+      price: 0
+    - id: 2
+      viewSprite: {fileID: 21300000, guid: 45c998f148590a243acc9f42a46aece8, type: 3}
+      accessType: 2
+      price: 0
+    - id: 3
+      viewSprite: {fileID: 21300000, guid: 20616cda3f70ed54f8d12c363fc2cc6f, type: 3}
+      accessType: 0
+      price: 0
+    - id: 4
+      viewSprite: {fileID: 21300000, guid: 2fb85a83320498d448fa26995de1dea9, type: 3}
+      accessType: 1
+      price: 0.99
+    - id: 5
+      viewSprite: {fileID: 21300000, guid: 8b823f525163d9244965c67792772ecf, type: 3}
+      accessType: 2
+      price: 0
+    - id: 6
+      viewSprite: {fileID: 21300000, guid: 8259400a3486d5949b287768564ba4f9, type: 3}
+      accessType: 0
+      price: 0
+    - id: 7
+      viewSprite: {fileID: 21300000, guid: 3fdfdbc1159e95d4abc17812b2cfcfea, type: 3}
+      accessType: 1
+      price: 0.99
+    - id: 8
+      viewSprite: {fileID: 21300000, guid: 4206dc8e8148c7345b237f223ef3c5fa, type: 3}
+      accessType: 1
+      price: 1.99
+    - id: 9
+      viewSprite: {fileID: 21300000, guid: b4bbe8356f4e11b449dceb09cfe403ff, type: 3}
+      accessType: 1
+      price: 2.99
+    - id: 10
+      viewSprite: {fileID: 21300000, guid: 98f574d94845448439740353acc798b3, type: 3}
+      accessType: 0
+      price: 0
+    - id: 11
+      viewSprite: {fileID: 21300000, guid: 27bf6476e3679cc4bbccc899d9da1901, type: 3}
+      accessType: 0
+      price: 0
+    - id: 12
+      viewSprite: {fileID: 21300000, guid: cc29cfb3b34be4644a2a136f48a20328, type: 3}
+      accessType: 0
+      price: 0
+  - id: cities
+    name: Cities
+    puzzleResList:
+    - id: 1
+      viewSprite: {fileID: 21300000, guid: e2a0bf8f8655488488b92a1816b86584, type: 3}
+      accessType: 0
+      price: 0
+    - id: 2
+      viewSprite: {fileID: 21300000, guid: ea138e103e028be4e84f7712611f30fe, type: 3}
+      accessType: 1
+      price: 0.99
+    - id: 3
+      viewSprite: {fileID: 21300000, guid: e96e13c495a745140afcd752c14460ce, type: 3}
+      accessType: 1
+      price: 0.99
+    - id: 4
+      viewSprite: {fileID: 21300000, guid: 75e67a9ea8878b14399bcd281de75272, type: 3}
+      accessType: 0
+      price: 0
+    - id: 5
+      viewSprite: {fileID: 21300000, guid: 92185c648257dff4b9a2dd9dd4660964, type: 3}
+      accessType: 2
+      price: 0
+    - id: 6
+      viewSprite: {fileID: 21300000, guid: 4da076e6a1005d349af61fd51acf3115, type: 3}
+      accessType: 0
+      price: 0
+    - id: 7
+      viewSprite: {fileID: 21300000, guid: 42f3d759ef672764890e27c3b1479bf8, type: 3}
+      accessType: 2
+      price: 0
+    - id: 8
+      viewSprite: {fileID: 21300000, guid: fcec05e0f6ea10e44830dc95176db162, type: 3}
+      accessType: 0
+      price: 0
+    - id: 9
+      viewSprite: {fileID: 21300000, guid: a7b1f7bd2ba9ff7489c34455e1658c7b, type: 3}
+      accessType: 0
+      price: 0
+    - id: 10
+      viewSprite: {fileID: 21300000, guid: 11a261e13d0cf9a47bf1d3a0397f37f3, type: 3}
+      accessType: 1
+      price: 5.49
+  - id: nature
+    name: Nature
+    puzzleResList:
+    - id: 1
+      viewSprite: {fileID: 21300000, guid: a50584c04f999284fb0726ed88f59294, type: 3}
+      accessType: 0
+      price: 0
+    - id: 2
+      viewSprite: {fileID: 21300000, guid: 6c0b759029a86564cbcd1a8514ea1e69, type: 3}
+      accessType: 0
+      price: 0
+    - id: 3
+      viewSprite: {fileID: 21300000, guid: 4958f3e4e3008d94a81b095c9254a3bf, type: 3}
+      accessType: 0
+      price: 0
+    - id: 4
+      viewSprite: {fileID: 21300000, guid: e7301bb845dec5d4594ee3fbf05501d7, type: 3}
+      accessType: 1
+      price: 1.99
+    - id: 5
+      viewSprite: {fileID: 21300000, guid: dc2814833b5525d4cad98d98de15d700, type: 3}
+      accessType: 1
+      price: 1.99
+    - id: 6
+      viewSprite: {fileID: 21300000, guid: 8459ce9c4f8280746b6dfc214f8f1c10, type: 3}
+      accessType: 1
+      price: 1.99
+    - id: 7
+      viewSprite: {fileID: 21300000, guid: ec438007f8393414aa713024924f3f2f, type: 3}
+      accessType: 2
+      price: 0
+    - id: 8
+      viewSprite: {fileID: 21300000, guid: 219ac8f76b94ef44f81c42d9a39f44db, type: 3}
+      accessType: 2
+      price: 0
+    - id: 9
+      viewSprite: {fileID: 21300000, guid: 38a20427917dd0b4da55aab0981deb66, type: 3}
+      accessType: 2
+      price: 0
+    - id: 10
+      viewSprite: {fileID: 21300000, guid: cdf1a24662849224d80609ede023e145, type: 3}
+      accessType: 0
+      price: 0

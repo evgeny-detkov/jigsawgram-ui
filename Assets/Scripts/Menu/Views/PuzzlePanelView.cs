@@ -1,0 +1,95 @@
+using System;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
+namespace Jigsawgram.UI
+{
+    public class PuzzlePanelView : MonoBehaviour
+    {
+        [SerializeField] private RectTransform puzzlePanel;
+        [SerializeField] private RectTransform puzzleContent;
+        [SerializeField] private Button backButton;
+        [SerializeField] private TextMeshProUGUI categoryTitle;
+        [SerializeField] private GameObject puzzlePrefab;
+
+        private UiObjectPool<PuzzleItemView> _pool;
+
+        public void Init(Action onShowCategories)
+        {
+            if (backButton != null)
+            {
+                backButton.onClick.RemoveAllListeners();
+                backButton.onClick.AddListener(() => onShowCategories?.Invoke());
+            }
+        }
+
+        public void SetPuzzlePanelActive(bool isActive)
+        {
+            if (puzzlePanel != null)
+            {
+                puzzlePanel.gameObject.SetActive(isActive);
+            }
+        }
+
+        public void RenderPuzzles(PuzzleCategoryModel category, Action<PuzzleModel> onPuzzleSelected)
+        {
+            if (categoryTitle != null)
+            {
+                categoryTitle.text = category != null ? category.Name : string.Empty;
+            }
+
+            EnsurePool();
+            if (_pool == null)
+            {
+                return;
+            }
+
+            _pool.ReleaseAll();
+
+            var list = category?.Puzzles;
+            if (list == null)
+            {
+                return;
+            }
+
+            foreach (var puzzle in list)
+            {
+                var view = _pool.Get();
+                var rect = view.transform as RectTransform;
+                if (rect != null)
+                {
+                    rect.localScale = Vector3.one;
+                }
+
+                var badge = puzzle.AccessType switch
+                {
+                    PuzzleAccessType.Free => "Free",
+                    PuzzleAccessType.Ads => "Ad",
+                    PuzzleAccessType.Paywall => $"{puzzle.Price}$",
+                    _ => string.Empty
+                };
+
+                var viewSprite = puzzle.ViewSprite;
+
+                view.Render(viewSprite, badge, () => onPuzzleSelected?.Invoke(puzzle));
+            }
+        }
+
+        private void EnsurePool()
+        {
+            if (_pool != null || puzzlePrefab == null || puzzleContent == null)
+            {
+                return;
+            }
+
+            var viewPrefab = puzzlePrefab.GetComponent<PuzzleItemView>();
+            if (viewPrefab == null)
+            {
+                return;
+            }
+
+            _pool = new UiObjectPool<PuzzleItemView>(viewPrefab, puzzleContent);
+        }
+    }
+}
