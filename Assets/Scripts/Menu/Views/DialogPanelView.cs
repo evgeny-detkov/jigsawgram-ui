@@ -5,8 +5,9 @@ using UnityEngine.UI;
 
 namespace Jigsawgram.UI
 {
-    public class DialogPanelView : MonoBehaviour
+    public class DialogPanelView : MonoBehaviour, IManagedWindow
     {
+        [SerializeField] private string windowId = "dialog";
         [SerializeField] private GameObject dialogRoot;
         [SerializeField] private TextMeshProUGUI dialogBody;
         [SerializeField] private Image viewImage;
@@ -14,57 +15,59 @@ namespace Jigsawgram.UI
         [SerializeField] private TextMeshProUGUI dialogPrimaryLabel;
         [SerializeField] private Button dialogCloseButton;
 
-        public void ShowDialog(PuzzleCategoryModel category, PuzzleModel puzzle, Action onPrimary)
+        public string Id => windowId;
+        public bool IsOverlay => true;
+        public GameObject Root => dialogRoot != null ? dialogRoot : gameObject;
+
+        public void ShowDialog(PuzzleCategoryModel category, PuzzleModel puzzle, PuzzleAccessViewData viewData,
+            Action onPrimary)
         {
-            if (dialogRoot == null ||
-                dialogBody == null ||
-                dialogPrimaryLabel == null)
+            if (dialogRoot == null || dialogBody == null || dialogPrimaryLabel == null)
             {
                 return;
             }
 
-            dialogRoot.SetActive(true);
-            dialogBody.text = puzzle.AccessType switch
-            {
-                PuzzleAccessType.Free => $"Start puzzle from \"{category.Name}\". Press to play.",
-                PuzzleAccessType.Ads => "Watch a short ad to unlock this puzzle.",
-                PuzzleAccessType.Paywall => $"This puzzle is paid. Pay {puzzle.Price}$ or pick another one.",
-                _ => string.Empty
-            };
+            Show();
 
-            dialogPrimaryLabel.text = puzzle.AccessType switch
-            {
-                PuzzleAccessType.Free => "Play",
-                PuzzleAccessType.Ads => "Watch Ad",
-                PuzzleAccessType.Paywall => $"Pay {puzzle.Price}$",
-                _ => "OK"
-            };
+            dialogBody.text = viewData != null ? viewData.Body : string.Empty;
+            dialogPrimaryLabel.text = viewData != null ? viewData.Primary : string.Empty;
 
             if (viewImage != null)
             {
                 viewImage.sprite = puzzle.ViewSprite;
             }
 
-            dialogPrimaryButton.onClick.RemoveAllListeners();
-            dialogPrimaryButton.onClick.AddListener(() => onPrimary?.Invoke());
+            if (dialogPrimaryButton != null)
+            {
+                dialogPrimaryButton.onClick.RemoveAllListeners();
+                dialogPrimaryButton.onClick.AddListener(() => onPrimary?.Invoke());
+            }
 
             if (dialogCloseButton != null)
             {
                 dialogCloseButton.onClick.RemoveAllListeners();
-                dialogCloseButton.onClick.AddListener(CloseDialog);
+                dialogCloseButton.onClick.AddListener(Hide);
             }
         }
 
         public void CloseDialog()
         {
-            SetDialogPanelActive(false);
+            Hide();
         }
 
-        private void SetDialogPanelActive(bool isActive)
+        public void Show()
         {
-            if (dialogRoot != null)
+            if (Root != null)
             {
-                dialogRoot.gameObject.SetActive(isActive);
+                Root.SetActive(true);
+            }
+        }
+
+        public void Hide()
+        {
+            if (Root != null)
+            {
+                Root.SetActive(false);
             }
         }
     }

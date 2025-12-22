@@ -4,13 +4,18 @@ using UnityEngine;
 
 namespace Jigsawgram.UI
 {
-    public class CategoryPanelView : MonoBehaviour
+    public class CategoryPanelView : MonoBehaviour, IManagedWindow
     {
+        [SerializeField] private string windowId = "categories";
         [SerializeField] private RectTransform categoryContent;
         [SerializeField] private RectTransform categoryPanel;
         [SerializeField] private GameObject categoryPrefab;
 
         private UiObjectPool<CategoryItemView> _pool;
+
+        public string Id => windowId;
+        public bool IsOverlay => false;
+        public GameObject Root => categoryPanel != null ? categoryPanel.gameObject : gameObject;
 
         public RectTransform CategoryContent => categoryContent;
 
@@ -52,6 +57,16 @@ namespace Jigsawgram.UI
                 var viewSprite = category.ViewSprite;
                 view.Render(category.Name, viewSprite, () => onCategorySelected?.Invoke(category));
             }
+        }
+
+        public void Show()
+        {
+            SetCategoryPanelActive(true);
+        }
+
+        public void Hide()
+        {
+            SetCategoryPanelActive(false);
         }
 
         private void EnsurePool()

@@ -18,6 +18,8 @@ namespace Jigsawgram.UI
 
         private CatalogService _catalogService;
         private CatalogModel _catalog;
+        private WindowManager _windowManager;
+        private PuzzleAccessPresenter _accessPresenter;
 
         private PuzzleCategoryModel _currentCategory;
 
@@ -30,6 +32,18 @@ namespace Jigsawgram.UI
 
             var catalogProvider = new ScriptableCatalogProvider(imageDatabase, resourcesImagesFolder);
             _catalogService = new CatalogService(catalogProvider);
+            _windowManager = new WindowManager(new IManagedWindow[]
+            {
+                categoryPanelView,
+                puzzlePanelView,
+                dialogPanelView
+            });
+            _accessPresenter = new PuzzleAccessPresenter(new IPuzzleAccessPolicy[]
+            {
+                new FreeAccessPolicy(),
+                new AdsAccessPolicy(),
+                new PaywallAccessPolicy()
+            }, new DefaultAccessPolicy());
         }
 
         private async UniTaskVoid Start()
@@ -55,16 +69,7 @@ namespace Jigsawgram.UI
         private void ShowCategories()
         {
             dialogPanelView.CloseDialog();
-
-            if (categoryPanelView != null)
-            {
-                categoryPanelView.SetCategoryPanelActive(true);
-            }
-
-            if (puzzlePanelView != null)
-            {
-                puzzlePanelView.SetPuzzlePanelActive(false);
-            }
+            _windowManager.ShowWindow(categoryPanelView != null ? categoryPanelView.Id : string.Empty);
 
             if (categoryPanelView == null)
             {
@@ -80,15 +85,7 @@ namespace Jigsawgram.UI
             _currentCategory = category;
             dialogPanelView.CloseDialog();
 
-            if (categoryPanelView != null)
-            {
-                categoryPanelView.SetCategoryPanelActive(false);
-            }
-
-            if (puzzlePanelView != null)
-            {
-                puzzlePanelView.SetPuzzlePanelActive(true);
-            }
+            _windowManager.ShowWindow(puzzlePanelView != null ? puzzlePanelView.Id : string.Empty);
 
             if (puzzlePanelView == null)
             {
@@ -105,11 +102,14 @@ namespace Jigsawgram.UI
                 return;
             }
 
-            dialogPanelView.ShowDialog(_currentCategory, puzzle, () =>
+            var accessView = _accessPresenter.Build(_currentCategory, puzzle);
+
+            dialogPanelView.ShowDialog(_currentCategory, puzzle, accessView, () =>
             {
                 Debug.Log($"Click puzzle {_currentCategory.Name} / {puzzle.Id}");
                 dialogPanelView.CloseDialog();
             });
+            _windowManager.ShowOverlay(dialogPanelView.Id);
         }
     }
 }

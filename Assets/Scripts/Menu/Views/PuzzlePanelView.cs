@@ -5,8 +5,9 @@ using UnityEngine.UI;
 
 namespace Jigsawgram.UI
 {
-    public class PuzzlePanelView : MonoBehaviour
+    public class PuzzlePanelView : MonoBehaviour, IManagedWindow
     {
+        [SerializeField] private string windowId = "puzzles";
         [SerializeField] private RectTransform puzzlePanel;
         [SerializeField] private RectTransform puzzleContent;
         [SerializeField] private Button backButton;
@@ -14,6 +15,10 @@ namespace Jigsawgram.UI
         [SerializeField] private GameObject puzzlePrefab;
 
         private UiObjectPool<PuzzleItemView> _pool;
+
+        public string Id => windowId;
+        public bool IsOverlay => false;
+        public GameObject Root => puzzlePanel != null ? puzzlePanel.gameObject : gameObject;
 
         public void Init(Action onShowCategories)
         {
@@ -74,6 +79,16 @@ namespace Jigsawgram.UI
 
                 view.Render(viewSprite, badge, () => onPuzzleSelected?.Invoke(puzzle));
             }
+        }
+
+        public void Show()
+        {
+            SetPuzzlePanelActive(true);
+        }
+
+        public void Hide()
+        {
+            SetPuzzlePanelActive(false);
         }
 
         private void EnsurePool()
