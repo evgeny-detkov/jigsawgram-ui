@@ -3,13 +3,13 @@ using UnityEngine;
 
 namespace Jigsawgram.UI
 {
-    public class UiObjectPool<T> where T : Component
+    public class UiViewPool<T> where T : Component
     {
         private readonly T _prefab;
         private readonly RectTransform _parent;
         private readonly List<T> _items = new List<T>();
 
-        public UiObjectPool(T prefab, RectTransform parent)
+        public UiViewPool(T prefab, RectTransform parent)
         {
             _prefab = prefab;
             _parent = parent;

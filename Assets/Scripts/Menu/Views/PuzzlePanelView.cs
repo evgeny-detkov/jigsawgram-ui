@@ -14,14 +14,19 @@ namespace Jigsawgram.UI
         [SerializeField] private TextMeshProUGUI categoryTitle;
         [SerializeField] private GameObject puzzlePrefab;
 
-        private UiObjectPool<PuzzleItemView> _pool;
+        private UiViewPool<PuzzleItemView> _pool;
+        private Action _onBack;
+        private Action<PuzzleModel> _onPuzzleSelected;
 
         public string Id => windowId;
         public bool IsOverlay => false;
         public GameObject Root => puzzlePanel != null ? puzzlePanel.gameObject : gameObject;
 
-        public void Init(Action onShowCategories)
+        public void Bind(Action onShowCategories, Action<PuzzleModel> onPuzzleSelected)
         {
+            _onBack = onShowCategories;
+            _onPuzzleSelected = onPuzzleSelected;
+
             if (backButton != null)
             {
                 backButton.onClick.RemoveAllListeners();
@@ -37,7 +42,7 @@ namespace Jigsawgram.UI
             }
         }
 
-        public void RenderPuzzles(PuzzleCategoryModel category, Action<PuzzleModel> onPuzzleSelected)
+        public void RenderPuzzles(PuzzleCategoryModel category)
         {
             if (categoryTitle != null)
             {
@@ -77,7 +82,7 @@ namespace Jigsawgram.UI
 
                 var viewSprite = puzzle.ViewSprite;
 
-                view.Render(viewSprite, badge, () => onPuzzleSelected?.Invoke(puzzle));
+                view.Render(viewSprite, badge, () => _onPuzzleSelected?.Invoke(puzzle));
             }
         }
 
@@ -104,7 +109,7 @@ namespace Jigsawgram.UI
                 return;
             }
 
-            _pool = new UiObjectPool<PuzzleItemView>(viewPrefab, puzzleContent);
+            _pool = new UiViewPool<PuzzleItemView>(viewPrefab, puzzleContent);
         }
     }
 }

@@ -11,7 +11,8 @@ namespace Jigsawgram.UI
         [SerializeField] private RectTransform categoryPanel;
         [SerializeField] private GameObject categoryPrefab;
 
-        private UiObjectPool<CategoryItemView> _pool;
+        private UiViewPool<CategoryItemView> _pool;
+        private Action<PuzzleCategoryModel> _onCategorySelected;
 
         public string Id => windowId;
         public bool IsOverlay => false;
@@ -21,6 +22,11 @@ namespace Jigsawgram.UI
 
         public RectTransform CategoryPanel => categoryPanel;
 
+        public void Bind(Action<PuzzleCategoryModel> onCategorySelected)
+        {
+            _onCategorySelected = onCategorySelected;
+        }
+
         public void SetCategoryPanelActive(bool isActive)
         {
             if (categoryPanel != null)
@@ -29,8 +35,7 @@ namespace Jigsawgram.UI
             }
         }
 
-        public void RenderCategories(IEnumerable<PuzzleCategoryModel> categories,
-            Action<PuzzleCategoryModel> onCategorySelected)
+        public void RenderCategories(IEnumerable<PuzzleCategoryModel> categories)
         {
             EnsurePool();
             if (_pool == null)
@@ -55,7 +60,7 @@ namespace Jigsawgram.UI
                 }
 
                 var viewSprite = category.ViewSprite;
-                view.Render(category.Name, viewSprite, () => onCategorySelected?.Invoke(category));
+                view.Render(category.Name, viewSprite, () => _onCategorySelected?.Invoke(category));
             }
         }
 
@@ -82,7 +87,7 @@ namespace Jigsawgram.UI
                 return;
             }
 
-            _pool = new UiObjectPool<CategoryItemView>(viewPrefab, categoryContent);
+            _pool = new UiViewPool<CategoryItemView>(viewPrefab, categoryContent);
         }
     }
 }
