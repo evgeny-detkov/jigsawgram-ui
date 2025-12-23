@@ -25,6 +25,21 @@ namespace Jigsawgram.UI
                 imageDatabase = Resources.Load<PuzzleImageDatabase>("Databases/PuzzleImageDatabase");
             }
 
+            if (categoryPanelView == null)
+            {
+                categoryPanelView = FindObjectOfType<CategoryPanelView>(true);
+            }
+
+            if (puzzlePanelView == null)
+            {
+                puzzlePanelView = FindObjectOfType<PuzzlePanelView>(true);
+            }
+
+            if (dialogPanelView == null)
+            {
+                dialogPanelView = FindObjectOfType<DialogPanelView>(true);
+            }
+
             var catalogProvider = new ScriptableCatalogProvider(imageDatabase, resourcesImagesFolder);
             _catalogService = new CatalogService(catalogProvider);
             var windowManager = new WindowManager(new IManagedWindow[]

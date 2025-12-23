@@ -34,6 +34,13 @@ namespace Jigsawgram.UI
 
         public async UniTask InitializeAsync()
         {
+            if (_catalogService == null || _windowManager == null ||
+                _categoryView == null || _puzzleView == null || _dialogView == null)
+            {
+                Debug.LogError("MenuPresenter is missing dependencies. Ensure all views and services are assigned.");
+                return;
+            }
+
             _categoryView.Bind(OnCategorySelected);
             _puzzleView.Bind(ShowCategories, OnPuzzleSelected);
 
@@ -45,6 +52,11 @@ namespace Jigsawgram.UI
 
         private void ShowCategories()
         {
+            if (_categoryView == null || _windowManager == null || _dialogView == null)
+            {
+                return;
+            }
+
             _dialogView.CloseDialog();
             _windowManager.ShowWindow(_categoryView.Id);
             _categoryView.RenderCategories(_catalog.Categories);
@@ -52,7 +64,7 @@ namespace Jigsawgram.UI
 
         private void OnCategorySelected(PuzzleCategoryModel category)
         {
-            if (category == null)
+            if (category == null || _puzzleView == null || _windowManager == null || _dialogView == null)
             {
                 return;
             }
@@ -65,7 +77,7 @@ namespace Jigsawgram.UI
 
         private void OnPuzzleSelected(PuzzleModel puzzle)
         {
-            if (_currentCategory == null || puzzle == null)
+            if (_currentCategory == null || puzzle == null || _dialogView == null || _windowManager == null)
             {
                 return;
             }
