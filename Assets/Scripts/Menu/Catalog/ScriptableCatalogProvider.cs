@@ -19,9 +19,7 @@ namespace Jigsawgram.UI
         public CatalogModel LoadCatalog()
         {
             if (_database != null && _database.categories != null && _database.categories.Count > 0)
-            {
                 return BuildFromDatabase(_database);
-            }
 
             return null;
         }
@@ -37,10 +35,7 @@ namespace Jigsawgram.UI
             for (var i = 0; i < db.categories.Count; i++)
             {
                 var entry = db.categories[i];
-                if (entry == null)
-                {
-                    continue;
-                }
+                if (entry == null) continue;
 
                 var puzzles = new List<PuzzleModel>();
                 var puzzlesList = entry.puzzleResList ?? new List<PuzzleImageDatabase.PuzzleRes>();

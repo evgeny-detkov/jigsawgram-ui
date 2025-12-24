@@ -15,9 +15,7 @@ namespace Jigsawgram.UI
                 var sceneContext = FindObjectOfType<SceneContext>();
                 if (sceneContext != null && sceneContext.Container != null &&
                     sceneContext.Container.HasBinding<MenuPresenter>())
-                {
                     _menuPresenter = sceneContext.Container.Resolve<MenuPresenter>();
-                }
             }
 
             if (_menuPresenter == null)

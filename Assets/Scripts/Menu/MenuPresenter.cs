@@ -52,10 +52,7 @@ namespace Jigsawgram.UI
 
         private void ShowCategories()
         {
-            if (_categoryView == null || _windowManager == null || _dialogView == null)
-            {
-                return;
-            }
+            if (_categoryView == null || _windowManager == null || _dialogView == null) return;
 
             _dialogView.CloseDialog();
             _windowManager.ShowWindow(_categoryView.Id);
@@ -64,10 +61,7 @@ namespace Jigsawgram.UI
 
         private void OnCategorySelected(PuzzleCategoryModel category)
         {
-            if (category == null || _puzzleView == null || _windowManager == null || _dialogView == null)
-            {
-                return;
-            }
+            if (category == null || _puzzleView == null || _windowManager == null || _dialogView == null) return;
 
             _currentCategory = category;
             _dialogView.CloseDialog();
@@ -77,10 +71,7 @@ namespace Jigsawgram.UI
 
         private void OnPuzzleSelected(PuzzleModel puzzle)
         {
-            if (_currentCategory == null || puzzle == null || _dialogView == null || _windowManager == null)
-            {
-                return;
-            }
+            if (_currentCategory == null || puzzle == null || _dialogView == null || _windowManager == null) return;
 
             var accessView = _accessPresenter.Build(_currentCategory, puzzle);
 

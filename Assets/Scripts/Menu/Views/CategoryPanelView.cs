@@ -29,35 +29,23 @@ namespace Jigsawgram.UI
 
         public void SetCategoryPanelActive(bool isActive)
         {
-            if (categoryPanel != null)
-            {
-                categoryPanel.gameObject.SetActive(isActive);
-            }
+            if (categoryPanel != null) categoryPanel.gameObject.SetActive(isActive);
         }
 
         public void RenderCategories(IEnumerable<PuzzleCategoryModel> categories)
         {
             EnsurePool();
-            if (_pool == null)
-            {
-                return;
-            }
+            if (_pool == null) return;
 
             _pool.ReleaseAll();
 
-            if (categories == null)
-            {
-                return;
-            }
+            if (categories == null) return;
 
             foreach (var category in categories)
             {
                 var view = _pool.Get();
                 var rect = view.transform as RectTransform;
-                if (rect != null)
-                {
-                    rect.localScale = Vector3.one;
-                }
+                if (rect != null) rect.localScale = Vector3.one;
 
                 var viewSprite = category.ViewSprite;
                 view.Render(category.Name, viewSprite, () => _onCategorySelected?.Invoke(category));
@@ -76,16 +64,10 @@ namespace Jigsawgram.UI
 
         private void EnsurePool()
         {
-            if (_pool != null || categoryPrefab == null || categoryContent == null)
-            {
-                return;
-            }
+            if (_pool != null || categoryPrefab == null || categoryContent == null) return;
 
             var viewPrefab = categoryPrefab.GetComponent<CategoryItemView>();
-            if (viewPrefab == null)
-            {
-                return;
-            }
+            if (viewPrefab == null) return;
 
             _pool = new UiViewPool<CategoryItemView>(viewPrefab, categoryContent);
         }

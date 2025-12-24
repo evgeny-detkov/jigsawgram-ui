@@ -13,23 +13,14 @@ namespace Jigsawgram.UI
 
         public void Render(string title, Sprite viewSprite, Action onClick)
         {
-            if (previewImage != null)
-            {
-                previewImage.sprite = viewSprite;
-            }
+            if (previewImage != null) previewImage.sprite = viewSprite;
 
-            if (titleText != null)
-            {
-                titleText.text = title;
-            }
+            if (titleText != null) titleText.text = title;
 
             if (button != null)
             {
                 button.onClick.RemoveAllListeners();
-                if (onClick != null)
-                {
-                    button.onClick.AddListener(onClick.Invoke);
-                }
+                if (onClick != null) button.onClick.AddListener(onClick.Invoke);
             }
         }
     }

@@ -22,20 +22,14 @@ namespace Jigsawgram.UI
         public void ShowDialog(PuzzleCategoryModel category, PuzzleModel puzzle, PuzzleAccessViewData viewData,
             Action onPrimary)
         {
-            if (dialogRoot == null || dialogBody == null || dialogPrimaryLabel == null)
-            {
-                return;
-            }
+            if (dialogRoot == null || dialogBody == null || dialogPrimaryLabel == null) return;
 
             Show();
 
             dialogBody.text = viewData != null ? viewData.Body : string.Empty;
             dialogPrimaryLabel.text = viewData != null ? viewData.Primary : string.Empty;
 
-            if (viewImage != null)
-            {
-                viewImage.sprite = puzzle.ViewSprite;
-            }
+            if (viewImage != null) viewImage.sprite = puzzle.ViewSprite;
 
             if (dialogPrimaryButton != null)
             {
@@ -57,18 +51,12 @@ namespace Jigsawgram.UI
 
         public void Show()
         {
-            if (Root != null)
-            {
-                Root.SetActive(true);
-            }
+            if (Root != null) Root.SetActive(true);
         }
 
         public void Hide()
         {
-            if (Root != null)
-            {
-                Root.SetActive(false);
-            }
+            if (Root != null) Root.SetActive(false);
         }
     }
 }

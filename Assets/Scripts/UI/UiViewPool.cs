@@ -7,7 +7,7 @@ namespace Jigsawgram.UI
     {
         private readonly T _prefab;
         private readonly RectTransform _parent;
-        private readonly List<T> _items = new List<T>();
+        private readonly List<T> _items = new();
 
         public UiViewPool(T prefab, RectTransform parent)
         {
@@ -38,10 +38,7 @@ namespace Jigsawgram.UI
             for (var i = 0; i < _items.Count; i++)
             {
                 var item = _items[i];
-                if (item != null)
-                {
-                    item.gameObject.SetActive(false);
-                }
+                if (item != null) item.gameObject.SetActive(false);
             }
         }
     }

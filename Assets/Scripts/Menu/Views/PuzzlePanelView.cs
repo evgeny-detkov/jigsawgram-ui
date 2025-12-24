@@ -36,41 +36,26 @@ namespace Jigsawgram.UI
 
         public void SetPuzzlePanelActive(bool isActive)
         {
-            if (puzzlePanel != null)
-            {
-                puzzlePanel.gameObject.SetActive(isActive);
-            }
+            if (puzzlePanel != null) puzzlePanel.gameObject.SetActive(isActive);
         }
 
         public void RenderPuzzles(PuzzleCategoryModel category)
         {
-            if (categoryTitle != null)
-            {
-                categoryTitle.text = category != null ? category.Name : string.Empty;
-            }
+            if (categoryTitle != null) categoryTitle.text = category != null ? category.Name : string.Empty;
 
             EnsurePool();
-            if (_pool == null)
-            {
-                return;
-            }
+            if (_pool == null) return;
 
             _pool.ReleaseAll();
 
             var list = category?.Puzzles;
-            if (list == null)
-            {
-                return;
-            }
+            if (list == null) return;
 
             foreach (var puzzle in list)
             {
                 var view = _pool.Get();
                 var rect = view.transform as RectTransform;
-                if (rect != null)
-                {
-                    rect.localScale = Vector3.one;
-                }
+                if (rect != null) rect.localScale = Vector3.one;
 
                 var badge = puzzle.AccessType switch
                 {
@@ -98,16 +83,10 @@ namespace Jigsawgram.UI
 
         private void EnsurePool()
         {
-            if (_pool != null || puzzlePrefab == null || puzzleContent == null)
-            {
-                return;
-            }
+            if (_pool != null || puzzlePrefab == null || puzzleContent == null) return;
 
             var viewPrefab = puzzlePrefab.GetComponent<PuzzleItemView>();
-            if (viewPrefab == null)
-            {
-                return;
-            }
+            if (viewPrefab == null) return;
 
             _pool = new UiViewPool<PuzzleItemView>(viewPrefab, puzzleContent);
         }

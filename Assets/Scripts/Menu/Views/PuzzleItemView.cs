@@ -13,10 +13,7 @@ namespace Jigsawgram.UI
 
         public void Render(Sprite viewSprite, string badge, Action onClick)
         {
-            if (viewImage != null)
-            {
-                viewImage.sprite = viewSprite;
-            }
+            if (viewImage != null) viewImage.sprite = viewSprite;
 
             if (badgeText != null)
             {
@@ -27,10 +24,7 @@ namespace Jigsawgram.UI
             if (button != null)
             {
                 button.onClick.RemoveAllListeners();
-                if (onClick != null)
-                {
-                    button.onClick.AddListener(onClick.Invoke);
-                }
+                if (onClick != null) button.onClick.AddListener(onClick.Invoke);
             }
         }
     }

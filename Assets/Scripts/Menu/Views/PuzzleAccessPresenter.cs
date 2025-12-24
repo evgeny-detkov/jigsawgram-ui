@@ -11,17 +11,12 @@ namespace Jigsawgram.UI
         {
             _policies = new Dictionary<PuzzleAccessType, IPuzzleAccessPolicy>();
             if (policies != null)
-            {
                 foreach (var policy in policies)
                 {
-                    if (policy == null)
-                    {
-                        continue;
-                    }
+                    if (policy == null) continue;
 
                     _policies[policy.Type] = policy;
                 }
-            }
 
             _fallback = fallback;
         }
@@ -29,10 +24,7 @@ namespace Jigsawgram.UI
         public PuzzleAccessViewData Build(PuzzleCategoryModel category, PuzzleModel puzzle)
         {
             var type = puzzle != null ? puzzle.AccessType : PuzzleAccessType.Free;
-            if (!_policies.TryGetValue(type, out var policy))
-            {
-                policy = _fallback;
-            }
+            if (!_policies.TryGetValue(type, out var policy)) policy = _fallback;
 
             return policy.Build(category, puzzle);
         }

@@ -17,10 +17,7 @@ namespace Jigsawgram.UI
 
         public async UniTask<CatalogModel> LoadCatalogAsync(bool forceReload = false)
         {
-            if (!forceReload && _cached != null)
-            {
-                return _cached;
-            }
+            if (!forceReload && _cached != null) return _cached;
 
             if (_provider == null)
             {

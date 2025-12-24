@@ -23,20 +23,11 @@ namespace Jigsawgram.UI
 
         private void SetupViews()
         {
-            if (categoryPanelView == null)
-            {
-                categoryPanelView = FindObjectOfType<CategoryPanelView>(true);
-            }
+            if (categoryPanelView == null) categoryPanelView = FindObjectOfType<CategoryPanelView>(true);
 
-            if (puzzlePanelView == null)
-            {
-                puzzlePanelView = FindObjectOfType<PuzzlePanelView>(true);
-            }
+            if (puzzlePanelView == null) puzzlePanelView = FindObjectOfType<PuzzlePanelView>(true);
 
-            if (dialogPanelView == null)
-            {
-                dialogPanelView = FindObjectOfType<DialogPanelView>(true);
-            }
+            if (dialogPanelView == null) dialogPanelView = FindObjectOfType<DialogPanelView>(true);
 
             Container.BindInstance(categoryPanelView).IfNotBound();
             Container.BindInstance(puzzlePanelView).IfNotBound();
@@ -56,20 +47,14 @@ namespace Jigsawgram.UI
             {
                 var db = imageDatabase ?? Resources.Load<PuzzleImageDatabase>("Databases/PuzzleImageDatabase");
                 if (db != null)
-                {
                     Container.BindInstance(db);
-                }
                 else
-                {
-                    Debug.LogWarning("PuzzleImageDatabase is not assigned and could not be loaded from Resources/Databases.");
-                }
+                    Debug.LogWarning(
+                        "PuzzleImageDatabase is not assigned and could not be loaded from Resources/Databases.");
             }
 
             var folder = string.IsNullOrWhiteSpace(resourcesImagesFolder) ? "Images" : resourcesImagesFolder;
-            if (!Container.HasBinding<string>())
-            {
-                Container.BindInstance(folder);
-            }
+            if (!Container.HasBinding<string>()) Container.BindInstance(folder);
         }
 
         private void BindCatalog()

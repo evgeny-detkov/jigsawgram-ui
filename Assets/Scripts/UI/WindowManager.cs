@@ -4,21 +4,15 @@ namespace Jigsawgram.UI
 {
     public class WindowManager
     {
-        private readonly Dictionary<string, IManagedWindow> _windows = new Dictionary<string, IManagedWindow>();
+        private readonly Dictionary<string, IManagedWindow> _windows = new();
 
         public WindowManager(IEnumerable<IManagedWindow> windows)
         {
-            if (windows == null)
-            {
-                return;
-            }
+            if (windows == null) return;
 
             foreach (var window in windows)
             {
-                if (window == null || string.IsNullOrEmpty(window.Id))
-                {
-                    continue;
-                }
+                if (window == null || string.IsNullOrEmpty(window.Id)) continue;
 
                 _windows[window.Id] = window;
                 window.Hide();
@@ -37,41 +31,27 @@ namespace Jigsawgram.UI
                 }
 
                 if (kvp.Key == id)
-                {
                     window.Show();
-                }
                 else
-                {
                     window.Hide();
-                }
             }
         }
 
         public void ShowOverlay(string id)
         {
-            if (_windows.TryGetValue(id, out var window))
-            {
-                window.Show();
-            }
+            if (_windows.TryGetValue(id, out var window)) window.Show();
         }
 
         public void HideOverlay(string id)
         {
-            if (_windows.TryGetValue(id, out var window) && window.IsOverlay)
-            {
-                window.Hide();
-            }
+            if (_windows.TryGetValue(id, out var window) && window.IsOverlay) window.Hide();
         }
 
         public void HideOverlays()
         {
             foreach (var window in _windows.Values)
-            {
                 if (window.IsOverlay)
-                {
                     window.Hide();
-                }
-            }
         }
     }
 }

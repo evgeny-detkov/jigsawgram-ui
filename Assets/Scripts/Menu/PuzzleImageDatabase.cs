@@ -6,7 +6,7 @@ namespace Jigsawgram.UI
     [CreateAssetMenu(fileName = "PuzzleImageDatabase", menuName = "Jigsawgram/Puzzle Image Database")]
     public class PuzzleImageDatabase : ScriptableObject
     {
-        public List<CategoryRes> categories = new List<CategoryRes>();
+        public List<CategoryRes> categories = new();
 
         [System.Serializable]
         public class PuzzleRes
@@ -27,7 +27,7 @@ namespace Jigsawgram.UI
         {
             public string id;
             public string name;
-            public List<PuzzleRes> puzzleResList = new List<PuzzleRes>();
+            public List<PuzzleRes> puzzleResList = new();
         }
     }
 }
