@@ -443,7 +443,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   imageDatabase: {fileID: 11400000, guid: 4c61c42ce8d54b85882de5f5e75c6c49, type: 2}
-  resourcesImagesFolder: Images
+  resourceSettings: {fileID: 11400000, guid: 6eaafd9e90ffa6c40a5f3c8acadd7f32, type: 2}
   categoryPanelView: {fileID: 900000004}
   puzzlePanelView: {fileID: 900000104}
   dialogPanelView: {fileID: 900000204}

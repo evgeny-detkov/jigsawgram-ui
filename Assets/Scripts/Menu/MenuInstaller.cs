@@ -6,7 +6,7 @@ namespace Jigsawgram.UI
     public class MenuInstaller : MonoInstaller
     {
         [Header("Images")] [SerializeField] private PuzzleImageDatabase imageDatabase;
-        [SerializeField] private string resourcesImagesFolder = "Images";
+        [SerializeField] private ResourceSettings resourceSettings;
 
         [Header("Views")] [SerializeField] private CategoryPanelView categoryPanelView;
         [SerializeField] private PuzzlePanelView puzzlePanelView;
@@ -15,7 +15,6 @@ namespace Jigsawgram.UI
         public override void InstallBindings()
         {
             SetupViews();
-            SetupImages();
             BindCatalog();
             BindAccessPolicies();
             BindPresenter();
@@ -41,29 +40,16 @@ namespace Jigsawgram.UI
             });
         }
 
-        private void SetupImages()
-        {
-            if (!Container.HasBinding<PuzzleImageDatabase>())
-            {
-                var db = imageDatabase ?? Resources.Load<PuzzleImageDatabase>("Databases/PuzzleImageDatabase");
-                if (db != null)
-                    Container.BindInstance(db);
-                else
-                    Debug.LogWarning(
-                        "PuzzleImageDatabase is not assigned and could not be loaded from Resources/Databases.");
-            }
-
-            var folder = string.IsNullOrWhiteSpace(resourcesImagesFolder) ? "Images" : resourcesImagesFolder;
-            if (!Container.HasBinding<string>()) Container.BindInstance(folder);
-        }
-
         private void BindCatalog()
         {
             var db = imageDatabase ?? Resources.Load<PuzzleImageDatabase>("Databases/PuzzleImageDatabase");
-            var folder = string.IsNullOrWhiteSpace(resourcesImagesFolder) ? "Images" : resourcesImagesFolder;
+            Container.BindInstance(db).IfNotBound();
+
+            var settings = resourceSettings ?? ScriptableObject.CreateInstance<ResourceSettings>();
+            Container.BindInstance(settings).IfNotBound();
 
             Container.Bind<IPuzzleCatalogProvider>().FromMethod(_ =>
-                new ScriptableCatalogProvider(db, folder)).AsSingle();
+                new ScriptableCatalogProvider(db, settings.ImagesFolder)).AsSingle();
             Container.Bind<CatalogService>().AsSingle();
         }
 

@@ -7,15 +7,15 @@ namespace Jigsawgram.UI
     public class MenuSettingsInstaller : ScriptableObjectInstaller<MenuSettingsInstaller>
     {
         [Header("Images")] [SerializeField] private PuzzleImageDatabase imageDatabase;
-        [SerializeField] private string resourcesImagesFolder = "Images";
+        [SerializeField] private ResourceSettings resourceSettings;
 
         public override void InstallBindings()
         {
             var db = imageDatabase ?? Resources.Load<PuzzleImageDatabase>("Databases/PuzzleImageDatabase");
             Container.BindInstance(db).IfNotBound();
 
-            var folder = string.IsNullOrWhiteSpace(resourcesImagesFolder) ? "Images" : resourcesImagesFolder;
-            Container.BindInstance(folder).IfNotBound();
+            var settings = resourceSettings ?? ScriptableObject.CreateInstance<ResourceSettings>();
+            Container.BindInstance(settings).IfNotBound();
         }
     }
 }
