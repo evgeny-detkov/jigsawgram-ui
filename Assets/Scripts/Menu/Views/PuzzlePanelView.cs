@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,6 +18,7 @@ namespace Jigsawgram.UI
         private UiViewPool<PuzzleItemView> _pool;
         private Action _onBack;
         private Action<PuzzleModel> _onPuzzleSelected;
+        private readonly Dictionary<PuzzleAccessType, string> _badgeCache = new Dictionary<PuzzleAccessType, string>();
 
         public string Id => windowId;
         public bool IsOverlay => false;
@@ -57,14 +59,7 @@ namespace Jigsawgram.UI
                 var rect = view.transform as RectTransform;
                 if (rect != null) rect.localScale = Vector3.one;
 
-                var badge = puzzle.AccessType switch
-                {
-                    PuzzleAccessType.Free => "Free",
-                    PuzzleAccessType.Ads => "Ad",
-                    PuzzleAccessType.Paywall => $"{puzzle.Price}$",
-                    _ => string.Empty
-                };
-
+                var badge = ResolveBadge(puzzle);
                 var viewSprite = puzzle.ViewSprite;
 
                 view.Render(viewSprite, badge, () => _onPuzzleSelected?.Invoke(puzzle));
@@ -89,6 +84,26 @@ namespace Jigsawgram.UI
             if (viewPrefab == null) return;
 
             _pool = new UiViewPool<PuzzleItemView>(viewPrefab, puzzleContent);
+        }
+
+        private string ResolveBadge(PuzzleModel puzzle)
+        {
+            var type = puzzle.AccessType;
+            if (_badgeCache.TryGetValue(type, out var cached))
+            {
+                return cached;
+            }
+
+            var badge = type switch
+            {
+                PuzzleAccessType.Free => "Free",
+                PuzzleAccessType.Ads => "Ad",
+                PuzzleAccessType.Paywall => $"{puzzle.Price}$",
+                _ => string.Empty
+            };
+
+            _badgeCache[type] = badge;
+            return badge;
         }
     }
 }
