@@ -11,11 +11,7 @@ namespace Jigsawgram.UI
 
         public override void InstallBindings()
         {
-            var db = imageDatabase ?? Resources.Load<PuzzleImageDatabase>("Databases/PuzzleImageDatabase");
-            Container.BindInstance(db).IfNotBound();
-
-            var settings = resourceSettings ?? ScriptableObject.CreateInstance<ResourceSettings>();
-            Container.BindInstance(settings).IfNotBound();
+            MenuInstallBinding.BindResources(Container, ref imageDatabase, ref resourceSettings);
         }
     }
 }

@@ -42,11 +42,9 @@ namespace Jigsawgram.UI
 
         private void BindCatalog()
         {
-            var db = imageDatabase ?? Resources.Load<PuzzleImageDatabase>("Databases/PuzzleImageDatabase");
-            Container.BindInstance(db).IfNotBound();
-
-            var settings = resourceSettings ?? ScriptableObject.CreateInstance<ResourceSettings>();
-            Container.BindInstance(settings).IfNotBound();
+            MenuInstallBinding.BindResources(Container, ref imageDatabase, ref resourceSettings);
+            var db = imageDatabase;
+            var settings = resourceSettings;
 
             Container.Bind<IPuzzleCatalogProvider>().FromMethod(_ =>
                 new ScriptableCatalogProvider(db, settings.ImagesFolder)).AsSingle();
